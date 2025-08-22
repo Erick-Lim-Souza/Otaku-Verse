@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OtakuVerse - Sua Plataforma de Anime e Mangá</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand logo" href="#" onclick="showPage('home-page')">OtakuVerse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('home-page')">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#animes" onclick="showPage('home-page'); setTimeout(() => document.getElementById('animes').scrollIntoView(), 100)">Animes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#mangas" onclick="showPage('home-page'); setTimeout(() => document.getElementById('mangas').scrollIntoView(), 100)">Mangás</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#comunidade" onclick="showPage('home-page'); setTimeout(() => document.getElementById('comunidade').scrollIntoView(), 100)">Comunidade</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-secondary-custom me-2">Entrar</a>
+                    <a href="#" class="btn btn-primary-custom">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Página Inicial -->
+    <div id="home-page" class="page active">
+        <main>
+            <section class="hero" id="home">
+                <div class="container">
+                    <h1>Bem-vindo ao OtakuVerse</h1>
+                    <p>Sua plataforma definitiva para animes, mangás e cultura otaku</p>
+                    <div class="search-container">
+                        <input type="text" class="form-control search-box" id="search-input" placeholder="Pesquisar animes, mangás ou personagens...">
+                        <button class="search-btn" id="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <a href="#animes" class="btn btn-primary-custom me-3" onclick="setTimeout(() => document.getElementById('animes').scrollIntoView(), 100)">Explorar Animes</a>
+                        <a href="#mangas" class="btn btn-secondary-custom" onclick="setTimeout(() => document.getElementById('mangas').scrollIntoView(), 100)">Ler Mangás</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features" id="features">
+                <div class="container">
+                    <h2>Recursos Exclusivos</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-3">
+                        <div class="col">
+                            <div class="feature-card">
+                                <div class="feature-icon">📺</div>
+                                <h3>Streaming HD</h3>
+                                <p>Assista aos seus animes favoritos em qualidade HD, com legendas em português e sem anúncios intrusivos.</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-card">
+                                <div class="feature-icon">📖</div>
+                                <h3>Biblioteca de Mangás</h3>
+                                <p>Acesse milhares de mangás traduzidos, com leitor otimizado e sincronização entre dispositivos.</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-card">
+                                <div class="feature-icon">👥</div>
+                                <h3>Comunidade Ativa</h3>
+                                <p>Conecte-se com outros otakus, participe de discussões e compartilhe suas reviews e recomendações.</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-card">
+                                <div class="feature-icon">🎯</div>
+                                <h3>Recomendações IA</h3>
+                                <p>Descobrir novos conteúdos baseados no seu histórico e preferências com nossa IA avançada.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" id="animes">
+                <div class="container">
+                    <h2 class="section-title">Animes em Destaque</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="anime-container">
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores animes para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores animes para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores animes para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores animes para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section" id="mangas">
+                <div class="container">
+                    <h2 class="section-title">Mangás Populares</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="manga-container">
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores mangás para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores mangás para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores mangás para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando os melhores mangás para você.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="community" id="comunidade">
+                <div class="container">
+                    <h2 class="section-title">Nossa Comunidade</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mt-3">
+                        <div class="col">
+                            <div class="stat-card">
+                                <div class="stat-number">1M+</div>
+                                <div class="stat-label">Usuários Ativos</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="stat-card">
+                                <div class="stat-number">5K+</div>
+                                <div class="stat-label">Animes Disponíveis</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="stat-card">
+                                <div class="stat-number">15K+</div>
+                                <div class="stat-label">Mangás Traduzidos</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="stat-card">
+                                <div class="stat-number">500K+</div>
+                                <div class="stat-label">Reviews e Comentários</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="py-5">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    <div class="col">
+                        <div class="footer-section">
+                            <h3>OtakuVerse</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Sobre Nós</a></li>
+                                <li><a href="#">Carreiras</a></li>
+                                <li><a href="#">Imprensa</a></li>
+                                <li><a href="#">Blog</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-section">
+                            <h3>Conteúdo</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Catálogo de Animes</a></li>
+                                <li><a href="#">Biblioteca de Mangás</a></li>
+                                <li><a href="#">Lançamentos</a></li>
+                                <li><a href="#">Rankings</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-section">
+                            <h3>Comunidade</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Fóruns</a></li>
+                                <li><a href="#">Discord</a></li>
+                                <li><a href="#">Reddit</a></li>
+                                <li><a href="#">Twitter</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="footer-section">
+                            <h3>Suporte</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Central de Ajuda</a></li>
+                                <li><a href="#">Contato</a></li>
+                                <li><a href="#">Termos de Uso</a></li>
+                                <li><a href="#">Privacidade</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom mt-5">
+                    <p>&copy; 2025 OtakuVerse. Todos os direitos reservados. Feito com ❤️ para a comunidade otaku.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Página de Detalhes -->
+    <div id="detail-page" class="page">
+        <div class="detail-page">
+            <div class="container">
+                <div class="back-button">
+                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    </button>
+                </div>
+                
+                <div class="detail-header text-center mb-5">
+                    <h1 id="detail-title">Carregando...</h1>
+                    <div class="rating justify-content-center">
+                        <span class="stars" id="detail-rating"></span>
+                        <span id="detail-score"></span>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="detail-poster">
+                            <img id="detail-image" src="" class="img-fluid" alt="Poster" style="width: 100%">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="detail-info">
+                            <h2>Informações</h2>
+                            <div class="info-grid" id="detail-info-grid">
+                                <!-- Informações serão preenchidas via JavaScript -->
+                            </div>
+                            
+                            <h2>Sinopse</h2>
+                            <p class="synopsis" id="detail-synopsis">Carregando sinopse...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Resultados de Busca -->
+    <div id="search-results-page" class="page">
+        <div class="search-results-page">
+            <div class="container">
+                <div class="back-button mb-4">
+                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    </button>
+                </div>
+                
+                <div class="results-count">
+                    <h2>Resultados da busca para: <span id="search-query"></span></h2>
+                    <p>Encontrados <span id="results-count">0</span> resultados</p>
+                </div>
+                
+                <div id="search-results-container">
+                    <!-- Resultados serão preenchidos via JavaScript -->
+                </div>
+                
+                <div id="no-results" class="no-results" style="display: none;">
+                    <div class="no-results-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Nenhum resultado encontrado</h3>
+                    <p>Não encontramos nenhum anime ou mangá correspondente à sua busca.</p>
+                    <button class="btn btn-primary-custom mt-3" onclick="showPage('home-page')">
+                        Voltar para a página inicial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21."></script>    
+    <script src="script.js"></script>
+</body>
+</html>
