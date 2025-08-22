@@ -1,6 +1,9 @@
-        // Variáveis globais
         let currentItemId = null;
         let currentItemType = null;
+        let previousPage = 'home-page';
+        
+        // Histórico de navegação
+        const pageHistory = ['home-page'];
         
         // Dicionário de tradução para termos comuns
         const translationDict = {
@@ -37,34 +40,16 @@
             'R+ - Mild Nudity': 'Conteúdo sugestivo',
             'Rx - Hentai': 'Hentai (conteúdo adulto explícito)',
             
-            // Genres (exemplos)
-            'Action': 'Ação',
-            'Adventure': 'Aventura',
-            'Comedy': 'Comédia',
-            'Drama': 'Drama',
-            'Fantasy': 'Fantasia',
-            'Horror': 'Terror',
-            'Mystery': 'Mistério',
-            'Romance': 'Romance',
-            'Sci-Fi': 'Ficção Científica',
-            'Slice of Life': 'Slice of Life',
-            'Sports': 'Esportes',
-            'Supernatural': 'Sobrenatural',
-            'Suspense': 'Suspense',
-            'Ecchi': 'Ecchi',
-            'Harem': 'Harem',
-            'Isekai': 'Isekai',
-            'Mecha': 'Mecha',
-            'Shounen': 'Shounen',
-            'Shoujo': 'Shoujo',
-            'Seinen': 'Seinen',
-            'Josei': 'Josei',
-            
-            // Seasons
-            'Summer': 'Verão',
-            'Winter': 'Inverno',
-            'Spring': 'Primavera',
-            'Fall': 'Outono'
+            // Dias da semana
+            'monday': 'Segunda-feira',
+            'tuesday': 'Terça-feira',
+            'wednesday': 'Quarta-feira',
+            'thursday': 'Quinta-feira',
+            'friday': 'Sexta-feira',
+            'saturday': 'Sábado',
+            'sunday': 'Domingo',
+            'other': 'Outros',
+            'unknown': 'Desconhecido'
         };
         
         // Função para traduzir texto
@@ -106,11 +91,32 @@
         
         // Função para alternar entre páginas
         function showPage(pageId) {
+            previousPage = document.querySelector('.page.active').id;
+            pageHistory.push(pageId);
+            
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0, 0);
+            
+            // Carrega dados específicos da página se necessário
+            if (pageId === 'seasons-page') {
+                loadSeasonAnime(2024, 'winter');
+            } else if (pageId === 'schedule-page') {
+                loadSchedule();
+            }
+        }
+        
+        // Função para voltar para a página anterior
+        function showPreviousPage() {
+            if (pageHistory.length > 1) {
+                pageHistory.pop(); // Remove a página atual
+                const previousPage = pageHistory[pageHistory.length - 1];
+                showPage(previousPage);
+            } else {
+                showPage('home-page');
+            }
         }
         
         // Smooth scrolling for navigation links
@@ -138,7 +144,7 @@
         });
 
         // Função para buscar dados da Jikan API
-        async function fetchJikanData(endpoint, containerId, type) {
+        async function fetchJikanData(endpoint, containerId, type, limit = 8) {
             try {
                 const response = await fetch(`https://api.jikan.moe/v4/${endpoint}`);
                 const data = await response.json();
@@ -146,8 +152,13 @@
                 const container = document.getElementById(containerId);
                 container.innerHTML = ''; // Limpa o conteúdo de carregamento
                 
-                // Limita a 8 itens
-                const items = data.data.slice(0, 8);
+                // Limita a itens
+                const items = data.data.slice(0, limit);
+                
+                if (items.length === 0) {
+                    container.innerHTML = '<div class="col-12 text-center"><p>Nenhum resultado encontrado.</p></div>';
+                    return;
+                }
                 
                 items.forEach(item => {
                     const card = document.createElement('div');
@@ -190,6 +201,146 @@
                 console.error(`Erro ao buscar ${type}:`, error);
                 const container = document.getElementById(containerId);
                 container.innerHTML = `<div class="col-12 text-center"><p>Não foi possível carregar os ${type}. Tente novamente mais tarde.</p></div>`;
+            }
+        }
+
+        // Função para carregar animes por temporada
+        async function loadSeasonAnime(year, season) {
+            try {
+                const response = await fetch(`https://api.jikan.moe/v4/seasons/${year}/${season}`);
+                const data = await response.json();
+                
+                const container = document.getElementById('seasons-container');
+                container.innerHTML = ''; // Limpa o conteúdo de carregamento
+                
+                // Limita a 12 itens
+                const items = data.data.slice(0, 12);
+                
+                if (items.length === 0) {
+                    container.innerHTML = '<div class="col-12 text-center"><p>Nenhum anime encontrado para esta temporada.</p></div>';
+                    return;
+                }
+                
+                const row = document.createElement('div');
+                row.className = 'row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4';
+                
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'col';
+                    
+                    // Formata a sinopse para limitar o tamanho
+                    let synopsis = item.synopsis || 'Sinopse não disponível.';
+                    if (synopsis.length > 100) {
+                        synopsis = synopsis.substring(0, 100) + '...';
+                    }
+                    
+                    // Gera estrelas baseadas na avaliação
+                    const score = item.score || 0;
+                    const stars = generateStarRating(score);
+                    
+                    card.innerHTML = `
+                        <div class="content-card">
+                            <div class="content-card-image" style="background-image: url('${item.images?.jpg?.large_image_url || item.images?.jpg?.image_url || ''}')">
+                                ${!item.images?.jpg?.large_image_url && !item.images?.jpg?.image_url ? '📺' : ''}
+                            </div>
+                            <div class="content-card-info">
+                                <h3>${item.title}</h3>
+                                <p>${synopsis}</p>
+                                <div class="rating">
+                                    <span class="stars">${stars}</span>
+                                    <span>${score > 0 ? score + '/10' : 'N/A'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Adiciona evento de clique ao card
+                    card.querySelector('.content-card').addEventListener('click', () => {
+                        showItemDetail(item.mal_id, 'anime');
+                    });
+                    
+                    row.appendChild(card);
+                });
+                
+                container.appendChild(row);
+                
+            } catch (error) {
+                console.error('Erro ao carregar animes da temporada:', error);
+                const container = document.getElementById('seasons-container');
+                container.innerHTML = '<div class="col-12 text-center"><p>Não foi possível carregar os animes da temporada. Tente novamente mais tarde.</p></div>';
+            }
+        }
+
+        // Função para carregar calendário de lançamentos
+        async function loadSchedule() {
+            try {
+                const response = await fetch('https://api.jikan.moe/v4/schedules');
+                const data = await response.json();
+                
+                const container = document.getElementById('schedule-container');
+                container.innerHTML = ''; // Limpa o conteúdo de carregamento
+                
+                // Agrupa por dia da semana
+                const days = {
+                    'monday': [], 'tuesday': [], 'wednesday': [], 'thursday': [],
+                    'friday': [], 'saturday': [], 'sunday': [], 'other': []
+                };
+                
+                data.data.forEach(item => {
+                    const day = item.broadcast?.day?.toLowerCase() || 'other';
+                    if (days[day]) {
+                        days[day].push(item);
+                    } else {
+                        days['other'].push(item);
+                    }
+                });
+                
+                // Limita a 5 animes por dia
+                Object.keys(days).forEach(day => {
+                    days[day] = days[day].slice(0, 5);
+                });
+                
+                // Cria os elementos para cada dia
+                Object.keys(days).forEach(day => {
+                    if (days[day].length === 0) return;
+                    
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'schedule-day';
+                    
+                    const dayTitle = document.createElement('h3');
+                    dayTitle.textContent = translateText(day);
+                    dayElement.appendChild(dayTitle);
+                    
+                    days[day].forEach(item => {
+                        const animeElement = document.createElement('div');
+                        animeElement.className = 'd-flex align-items-center mb-2 p-2 bg-dark bg-opacity-25 rounded';
+                        animeElement.style.cursor = 'pointer';
+                        
+                        animeElement.innerHTML = `
+                            <img src="${item.images?.jpg?.small_image_url || ''}" width="50" height="70" class="me-3 rounded" style="object-fit: cover;">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0">${item.title}</h6>
+                                <small class="text-white-50">${item.broadcast?.time || 'Horário não definido'}</small>
+                            </div>
+                            <div class="text-warning">
+                                <small>⭐ ${item.score || 'N/A'}</small>
+                            </div>
+                        `;
+                        
+                        animeElement.addEventListener('click', () => {
+                            showItemDetail(item.mal_id, 'anime');
+                        });
+                        
+                        dayElement.appendChild(animeElement);
+                    });
+                    
+                    container.appendChild(dayElement);
+                });
+                
+            } catch (error) {
+                console.error('Erro ao carregar calendário:', error);
+                const container = document.getElementById('schedule-container');
+                container.innerHTML = '<div class="col-12 text-center"><p>Não foi possível carregar o calendário. Tente novamente mais tarde.</p></div>';
             }
         }
 
@@ -380,6 +531,18 @@
                 const query = document.getElementById('search-input').value;
                 searchContent(query);
             }
+        });
+
+        // Adiciona event listeners para os botões de temporada
+        document.querySelectorAll('.season-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const year = this.getAttribute('data-year');
+                const season = this.getAttribute('data-season');
+                loadSeasonAnime(year, season);
+            });
         });
 
         // Carrega os dados quando a página estiver pronta
