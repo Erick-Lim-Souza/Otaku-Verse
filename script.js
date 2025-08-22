@@ -1,4 +1,4 @@
-        // Variáveis globais
+ // Variáveis globais
         let currentItemId = null;
         let currentItemType = null;
         let previousPage = 'home-page';
@@ -92,14 +92,26 @@
         
         // Função para alternar entre páginas
         function showPage(pageId) {
+            console.log('Tentando mostrar página:', pageId);
+            
+            // Verifica se a página existe
+            const targetPage = document.getElementById(pageId);
+            if (!targetPage) {
+                console.error('Página não encontrada:', pageId);
+                return;
+            }
+            
             previousPage = document.querySelector('.page.active').id;
             pageHistory.push(pageId);
             
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
-            document.getElementById(pageId).classList.add('active');
+            
+            targetPage.classList.add('active');
             window.scrollTo(0, 0);
+            
+            console.log('Página ativa:', pageId);
             
             // Carrega dados específicos da página se necessário
             if (pageId === 'seasons-page') {
@@ -534,21 +546,26 @@
             }
         });
 
-        // Adiciona event listeners para os botões de temporada
-        document.querySelectorAll('.season-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                const year = this.getAttribute('data-year');
-                const season = this.getAttribute('data-season');
-                loadSeasonAnime(year, season);
-            });
-        });
-
         // Carrega os dados quando a página estiver pronta
         document.addEventListener('DOMContentLoaded', function() {
             console.log('OtakuVerse carregado com sucesso!');
+            
+            // Adiciona event listeners para os botões de temporada
+            setTimeout(() => {
+                const seasonButtons = document.querySelectorAll('.season-btn');
+                console.log('Botões de temporada encontrados:', seasonButtons.length);
+                
+                seasonButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        const year = this.getAttribute('data-year');
+                        const season = this.getAttribute('data-season');
+                        loadSeasonAnime(year, season);
+                    });
+                });
+            }, 1000);
             
             // Busca animes e mangás populares
             fetchJikanData('top/anime', 'anime-container', 'anime');
