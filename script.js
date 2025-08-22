@@ -1,3 +1,4 @@
+        // Variáveis globais
         let currentItemId = null;
         let currentItemType = null;
         let previousPage = 'home-page';
