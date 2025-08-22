@@ -20,8 +20,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('home-page')">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#animes" onclick="showPage('home-page'); setTimeout(() => document.getElementById('animes').scrollIntoView(), 100)">Animes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#mangas" onclick="showPage('home-page'); setTimeout(() => document.getElementById('mangas').scrollIntoView(), 100)">Mangás</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('seasons-page')">Temporadas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('schedule-page')">Calendário</a></li>
                     <li class="nav-item"><a class="nav-link" href="#comunidade" onclick="showPage('home-page'); setTimeout(() => document.getElementById('comunidade').scrollIntoView(), 100)">Comunidade</a></li>
                 </ul>
                 <div class="d-flex">
@@ -303,20 +303,32 @@
                         </div>
                     </div>
                 </div>
+
+                <!--RODAPÉ-->
                 <div class="footer-bottom mt-5">
-                    <p>&copy; 2025 OtakuVerse. Todos os direitos reservados. Feito com ❤️ para a comunidade otaku.</p>
-                </div>
-            </div>
-        </footer>
+    <p>&copy; 2025 OtakuVerse. Todos os direitos reservados. Feito com 💚 para a comunidade otaku.</p>
+    <p>Desenvolvido por Erick de Lima Souza <a href="https://ericklima-dev.netlify.app/">By. <strong>Green Monster Project</strong></a> &copy; 2025</p>
+    
+    <!-- Adição das informações sobre a API e agradecimentos -->
+    <div class="mt-3 pt-3 border-top border-secondary">
+            <P>
+                Este site utiliza a <a href="https://jikan.moe" target="_blank" class="text-warning">Jikan API</a>
+                uma API não oficial do MyAnimeList.
+            <P>
+                Agradecimentos especiais à comunidade Jikan por fornecer acesso aos dados de anime e mangá.
+            </P>
+        </p>
     </div>
+</div>
+    
 
     <!-- Página de Detalhes -->
     <div id="detail-page" class="page">
         <div class="detail-page">
             <div class="container">
                 <div class="back-button">
-                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
-                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    <button class="btn btn-secondary-custom" onclick="showPreviousPage()">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar
                     </button>
                 </div>
                 
@@ -378,6 +390,143 @@
                     <button class="btn btn-primary-custom mt-3" onclick="showPage('home-page')">
                         Voltar para a página inicial
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Temporadas -->
+    <div id="seasons-page" class="page">
+        <div class="seasons-page">
+            <div class="container">
+                <div class="back-button mb-4">
+                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    </button>
+                </div>
+                
+                <h2 class="section-title">Animes por Temporada</h2>
+                
+                <div class="season-selector">
+                    <h3>Selecionar Temporada</h3>
+                    <div class="d-flex flex-wrap">
+                        <button class="season-btn active" data-year="2024" data-season="winter">Inverno 2024</button>
+                        <button class="season-btn" data-year="2023" data-season="fall">Outono 2023</button>
+                        <button class="season-btn" data-year="2023" data-season="summer">Verão 2023</button>
+                        <button class="season-btn" data-year="2023" data-season="spring">Primavera 2023</button>
+                    </div>
+                </div>
+                
+                <div id="seasons-container">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando animes da temporada.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando animes da temporada.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando animes da temporada.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="content-card">
+                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
+                                    <div class="loader"></div>
+                                </div>
+                                <div class="content-card-info">
+                                    <h3>Carregando...</h3>
+                                    <p>Buscando animes da temporada.</p>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span>--/10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Calendário -->
+    <div id="schedule-page" class="page">
+        <div class="schedule-page">
+            <div class="container">
+                <div class="back-button mb-4">
+                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    </button>
+                </div>
+                
+                <h2 class="section-title">Calendário de Lançamentos</h2>
+                <p class="text-center mb-4">Confira os lançamentos de episódios por dia da semana</p>
+                
+                <div id="schedule-container">
+                    <div class="schedule-day">
+                        <h3>Segunda-feira</h3>
+                        <div class="loader"></div>
+                    </div>
+                    <div class="schedule-day">
+                        <h3>Terça-feira</h3>
+                        <div class="loader"></div>
+                    </div>
+                    <div class="schedule-day">
+                        <h3>Quarta-feira</h3>
+                        <div class="loader"></div>
+                    </div>
+                    <div class="schedule-day">
+                        <h3>Quinta-feira</h3>
+                        <div class="loader"></div>
+                    </div>
+                    <div class="schedule-day">
+                        <h3>Sexta-feira</h3>
+                        <div class="loader"></div>
+                    </div>
+                    <div class="schedule-day">
+                        <h3>Sábado</h3>
+                        <div class="loader"></div>
+                    </div>
+                    <div class="schedule-day">
+                        <h3>Domingo</h3>
+                        <div class="loader"></div>
+                    </div>
                 </div>
             </div>
         </div>
