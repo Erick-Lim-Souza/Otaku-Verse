@@ -9,6 +9,7 @@
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
     <header class="navbar navbar-expand-lg navbar-dark">
@@ -22,6 +23,8 @@
                     <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('home-page')">Início</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('seasons-page')">Temporadas</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('schedule-page')">Calendário</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('characters-page')">Personagens</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('news-page')">Notícias</a></li>
                     <li class="nav-item"><a class="nav-link" href="#comunidade" onclick="showPage('home-page'); setTimeout(() => document.getElementById('comunidade').scrollIntoView(), 100)">Comunidade</a></li>
                 </ul>
                 <div class="d-flex">
@@ -58,7 +61,7 @@
                             <div class="feature-card">
                                 <div class="feature-icon">📺</div>
                                 <h3>Streaming HD</h3>
-                                <p>Assista aos seus animes favoritos em qualidade HD, avec legendas em português e sem anúncios intrusivos.</p>
+                                <p>Assista aos seus animes favoritos em qualidade HD, com legendas em português e sem anúncios intrusivos.</p>
                             </div>
                         </div>
                         <div class="col">
@@ -88,136 +91,159 @@
 
             <section class="content-section" id="animes">
                 <div class="container">
-                    <h2 class="section-title">Animes em Destaque</h2>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="section-title mb-0">Animes em Destaque</h2>
+                        <div>
+                            <button class="btn btn-secondary-custom me-2" onclick="showFilters('anime')">
+                                <i class="fas fa-filter me-1"></i>Filtrar
+                            </button>
+                            <button class="btn btn-secondary-custom" onclick="showPage('favorites-page')">
+                                <i class="fas fa-heart me-1"></i>Favoritos
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filtros -->
+                    <div id="anime-filters" class="filter-section" style="display: none;">
+                        <h3 class="filter-title">Filtrar Animes</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="filter-group">
+                                    <label class="filter-label">Gênero</label>
+                                    <select class="filter-select" id="genre-filter">
+                                        <option value="">Todos os gêneros</option>
+                                        <option value="action">Ação</option>
+                                        <option value="adventure">Aventura</option>
+                                        <option value="comedy">Comédia</option>
+                                        <option value="drama">Drama</option>
+                                        <option value="fantasy">Fantasia</option>
+                                        <option value="sci-fi">Ficção Científica</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="filter-group">
+                                    <label class="filter-label">Ano</label>
+                                    <select class="filter-select" id="year-filter">
+                                        <option value="">Todos os anos</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                        <option value="2020">2020</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="filter-group">
+                                    <label class="filter-label">Status</label>
+                                    <select class="filter-select" id="status-filter">
+                                        <option value="">Todos os status</option>
+                                        <option value="airing">Em exibição</option>
+                                        <option value="completed">Completo</option>
+                                        <option value="upcoming">Em breve</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="filter-group">
+                                    <label class="filter-label">Ordem</label>
+                                    <select class="filter-select" id="order-filter">
+                                        <option value="popularity">Popularidade</option>
+                                        <option value="score">Nota</option>
+                                        <option value="title">Título</option>
+                                        <option value="date">Data</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary-custom filter-apply" onclick="applyFilters('anime')">Aplicar Filtros</button>
+                    </div>
+
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="anime-container">
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores animes para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores animes para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores animes para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores animes para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Conteúdo carregado via JavaScript -->
+                    </div>
+
+                    <!-- Paginação -->
+                    <div class="pagination" id="anime-pagination">
+                        <button class="page-btn" onclick="changePage('prev', 'anime')">&laquo; Anterior</button>
+                        <button class="page-btn active" onclick="changePage(1, 'anime')">1</button>
+                        <button class="page-btn" onclick="changePage(2, 'anime')">2</button>
+                        <button class="page-btn" onclick="changePage(3, 'anime')">3</button>
+                        <button class="page-btn" onclick="changePage('next', 'anime')">Próxima &raquo;</button>
                     </div>
                 </div>
             </section>
 
             <section class="content-section" id="mangas">
                 <div class="container">
-                    <h2 class="section-title">Mangás Populares</h2>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="section-title mb-0">Mangás Populares</h2>
+                        <div>
+                            <button class="btn btn-secondary-custom me-2" onclick="showFilters('manga')">
+                                <i class="fas fa-filter me-1"></i>Filtrar
+                            </button>
+                            <button class="btn btn-secondary-custom" onclick="showPage('favorites-page')">
+                                <i class="fas fa-heart me-1"></i>Favoritos
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filtros -->
+                    <div id="manga-filters" class="filter-section" style="display: none;">
+                        <h3 class="filter-title">Filtrar Mangás</h3>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="filter-group">
+                                    <label class="filter-label">Gênero</label>
+                                    <select class="filter-select" id="manga-genre-filter">
+                                        <option value="">Todos os gêneros</option>
+                                        <option value="action">Ação</option>
+                                        <option value="adventure">Aventura</option>
+                                        <option value="comedy">Comédia</option>
+                                        <option value="drama">Drama</option>
+                                        <option value="fantasy">Fantasia</option>
+                                        <option value="sci-fi">Ficção Científica</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="filter-group">
+                                    <label class="filter-label">Status</label>
+                                    <select class="filter-select" id="manga-status-filter">
+                                        <option value="">Todos os status</option>
+                                        <option value="publishing">Publicando</option>
+                                        <option value="completed">Completo</option>
+                                        <option value="hiatus">Hiato</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="filter-group">
+                                    <label class="filter-label">Ordem</label>
+                                    <select class="filter-select" id="manga-order-filter">
+                                        <option value="popularity">Popularidade</option>
+                                        <option value="score">Nota</option>
+                                        <option value="title">Título</option>
+                                        <option value="chapters">Capítulos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary-custom filter-apply" onclick="applyFilters('manga')">Aplicar Filtros</button>
+                    </div>
+
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" id="manga-container">
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores mangás para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores mangás para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores mangás para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="content-card">
-                                <div class="content-card-image" style="background: linear-gradient(45deg, #ff6b6b, #ffd93d);">
-                                    <div class="loader"></div>
-                                </div>
-                                <div class="content-card-info">
-                                    <h3>Carregando...</h3>
-                                    <p>Buscando os melhores mangás para você.</p>
-                                    <div class="rating">
-                                        <span class="stars">⭐⭐⭐⭐⭐</span>
-                                        <span>--/10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Conteúdo carregado via JavaScript -->
+                    </div>
+
+                    <!-- Paginação -->
+                    <div class="pagination" id="manga-pagination">
+                        <button class="page-btn" onclick="changePage('prev', 'manga')">&laquo; Anterior</button>
+                        <button class="page-btn active" onclick="changePage(1, 'manga')">1</button>
+                        <button class="page-btn" onclick="changePage(2, 'manga')">2</button>
+                        <button class="page-btn" onclick="changePage(3, 'manga')">3</button>
+                        <button class="page-btn" onclick="changePage('next', 'manga')">Próxima &raquo;</button>
                     </div>
                 </div>
             </section>
@@ -290,6 +316,14 @@
                             <h2>Sinopse</h2>
                             <p class="synopsis" id="detail-synopsis">Carregando sinopse...</p>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Lista de Episódios (para animes) -->
+                <div class="episode-list" id="episode-list" style="display: none;">
+                    <h2 class="section-title">Lista de Episódios</h2>
+                    <div id="episode-container">
+                        <!-- Episódios carregados via JavaScript -->
                     </div>
                 </div>
             </div>
@@ -430,7 +464,7 @@
                 </div>
                 
                 <h2 class="section-title">Calendário de Lançamentos</h2>
-                <p class="text-center mb-4">Confira os lançamentos de episódios por day of the week</p>
+                <p class="text-center mb-4">Confira os lançamentos de episódios por dia da semana</p>
                 
                 <div id="schedule-container">
                     <div class="schedule-day">
@@ -461,6 +495,78 @@
                         <h3>Domingo</h3>
                         <div class="loader"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Personagens -->
+    <div id="characters-page" class="page">
+        <div class="character-page">
+            <div class="container">
+                <div class="back-button mb-4">
+                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    </button>
+                </div>
+                
+                <h2 class="section-title">Personagens Populares</h2>
+                <p class="text-center mb-4">Conheça os personagens mais populares do mundo dos animes</p>
+                
+                <div class="character-grid" id="characters-container">
+                    <!-- Personagens carregados via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Notícias -->
+    <div id="news-page" class="page">
+        <div class="news-page">
+            <div class="container">
+                <div class="back-button mb-4">
+                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    </button>
+                </div>
+                
+                <h2 class="section-title">Notícias de Animes</h2>
+                <p class="text-center mb-4">Fique por dentro das últimas notícias do mundo dos animes e mangás</p>
+                
+                <div class="news-grid" id="news-container">
+                    <!-- Notícias carregadas via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de Favoritos -->
+    <div id="favorites-page" class="page">
+        <div class="seasons-page">
+            <div class="container">
+                <div class="back-button mb-4">
+                    <button class="btn btn-secondary-custom" onclick="showPage('home-page')">
+                        <i class="fas fa-arrow-left me-2"></i>Voltar para a página inicial
+                    </button>
+                </div>
+                
+                <h2 class="section-title">Meus Favoritos</h2>
+                
+                <div id="favorites-container">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                        <!-- Favoritos carregados via JavaScript -->
+                    </div>
+                </div>
+
+                <div id="no-favorites" class="no-results" style="display: none;">
+                    <div class="no-results-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Nenhum favorito encontrado</h3>
+                    <p>Você ainda não adicionou nenhum anime ou mangá aos favoritos.</p>
+                    <button class="btn btn-primary-custom mt-3" onclick="showPage('home-page')">
+                        Explorar Conteúdo
+                    </button>
                 </div>
             </div>
         </div>
@@ -548,9 +654,15 @@
         </div>
     </footer>
 
+    <!-- Botão de Toggle para Modo Escuro/Claro -->
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    
+    <script src="script.js"></script>  
 
 </body>
 </html>
